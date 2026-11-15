@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Doações · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<div class="linha-titulo">
+  <h1>Doações</h1>
+  <a class="botao" href="{{ url_for('main.doacao_nova') }}">+ Nova doação</a>
+</div>
+{% if doacoes %}
+<table>
+  <thead>
+    <tr><th>Item</th><th>Categoria</th><th>Doador</th><th>Qtd.</th><th>Disponível</th><th>Validade</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for d in doacoes %}
+    <tr>
+      <td>{{ d.descricao }}</td>
+      <td>{{ d.categoria }}</td>
+      <td>{{ d.doador.nome }}</td>
+      <td>{{ d.quantidade }} {{ d.unidade }}</td>
+      <td>{{ d.quantidade_disponivel }} {{ d.unidade }}</td>
+      <td>{{ d.data_validade.strftime('%d/%m/%Y') if d.data_validade else '—' }}</td>
+      <td>
+        <form method="post" action="{{ url_for('main.doacao_excluir', doacao_id=d.id) }}"
+              onsubmit="return confirm('Remover esta doação?');">
+          <button class="botao-perigo" type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vazio">Nenhuma doação registrada.</p>
+{% endif %}
+{% endblock %}
