@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Doadores · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<div class="linha-titulo">
+  <h1>Doadores</h1>
+  <a class="botao" href="{{ url_for('main.doador_novo') }}">+ Novo doador</a>
+</div>
+{% if doadores %}
+<table>
+  <thead><tr><th>Nome</th><th>Tipo</th><th>E-mail</th><th>Telefone</th><th></th></tr></thead>
+  <tbody>
+    {% for d in doadores %}
+    <tr>
+      <td>{{ d.nome }}</td>
+      <td>{{ d.tipo }}</td>
+      <td>{{ d.email or '—' }}</td>
+      <td>{{ d.telefone or '—' }}</td>
+      <td>
+        <form method="post" action="{{ url_for('main.doador_excluir', doador_id=d.id) }}"
+              onsubmit="return confirm('Remover este doador e suas doações?');">
+          <button class="botao-perigo" type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vazio">Nenhum doador cadastrado.</p>
+{% endif %}
+{% endblock %}
