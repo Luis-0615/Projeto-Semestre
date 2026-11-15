@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Famílias · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<div class="linha-titulo">
+  <h1>Famílias beneficiadas</h1>
+  <a class="botao" href="{{ url_for('main.familia_nova') }}">+ Nova família</a>
+</div>
+{% if familias %}
+<table>
+  <thead><tr><th>Responsável</th><th>Bairro</th><th>Telefone</th><th>Membros</th><th></th></tr></thead>
+  <tbody>
+    {% for f in familias %}
+    <tr>
+      <td>{{ f.responsavel }}</td>
+      <td>{{ f.bairro or '—' }}</td>
+      <td>{{ f.telefone or '—' }}</td>
+      <td>{{ f.qtd_membros }}</td>
+      <td>
+        <form method="post" action="{{ url_for('main.familia_excluir', familia_id=f.id) }}"
+              onsubmit="return confirm('Remover esta família e seu histórico?');">
+          <button class="botao-perigo" type="submit">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vazio">Nenhuma família cadastrada.</p>
+{% endif %}
+{% endblock %}
