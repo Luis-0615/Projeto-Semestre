@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Distribuições · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<div class="linha-titulo">
+  <h1>Distribuições</h1>
+  <a class="botao" href="{{ url_for('main.distribuicao_nova') }}">+ Nova distribuição</a>
+</div>
+{% if distribuicoes %}
+<table>
+  <thead><tr><th>Data</th><th>Família</th><th>Item</th><th>Qtd.</th><th>Observação</th></tr></thead>
+  <tbody>
+    {% for d in distribuicoes %}
+    <tr>
+      <td>{{ d.data_distribuicao.strftime('%d/%m/%Y') }}</td>
+      <td>{{ d.familia.responsavel }}</td>
+      <td>{{ d.doacao.descricao }}</td>
+      <td>{{ d.quantidade }} {{ d.doacao.unidade }}</td>
+      <td>{{ d.observacao or '—' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="vazio">Nenhuma distribuição registrada.</p>
+{% endif %}
+{% endblock %}
