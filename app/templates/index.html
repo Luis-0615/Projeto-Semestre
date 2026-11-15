@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Início · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<h1>Painel da ONG</h1>
+
+<section class="cards">
+  <div class="card"><span class="numero">{{ totais.doadores }}</span><span>Doadores</span></div>
+  <div class="card"><span class="numero">{{ totais.doacoes }}</span><span>Doações</span></div>
+  <div class="card"><span class="numero">{{ totais.familias }}</span><span>Famílias</span></div>
+  <div class="card"><span class="numero">{{ totais.distribuicoes }}</span><span>Distribuições</span></div>
+</section>
+
+<section>
+  <h2>Itens próximos do vencimento (7 dias)</h2>
+  {% if vencendo %}
+  <table>
+    <thead><tr><th>Item</th><th>Disponível</th><th>Validade</th></tr></thead>
+    <tbody>
+      {% for d in vencendo %}
+      <tr class="alerta">
+        <td>{{ d.descricao }}</td>
+        <td>{{ d.quantidade_disponivel }} {{ d.unidade }}</td>
+        <td>{{ d.data_validade.strftime('%d/%m/%Y') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="vazio">Nenhum item vencendo nos próximos 7 dias.</p>
+  {% endif %}
+</section>
+
+<section>
+  <h2>Últimas doações recebidas</h2>
+  {% if ultimas %}
+  <table>
+    <thead><tr><th>Item</th><th>Doador</th><th>Qtd.</th><th>Disponível</th><th>Recebida em</th></tr></thead>
+    <tbody>
+      {% for d in ultimas %}
+      <tr>
+        <td>{{ d.descricao }}</td>
+        <td>{{ d.doador.nome }}</td>
+        <td>{{ d.quantidade }} {{ d.unidade }}</td>
+        <td>{{ d.quantidade_disponivel }} {{ d.unidade }}</td>
+        <td>{{ d.data_recebimento.strftime('%d/%m/%Y') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="vazio">Nenhuma doação registrada ainda.</p>
+  {% endif %}
+</section>
+{% endblock %}
