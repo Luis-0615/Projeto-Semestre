@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Nova distribuição · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<h1>Nova distribuição</h1>
+{% if not familias or not doacoes %}
+<p class="vazio">
+  É preciso ter ao menos uma <a href="{{ url_for('main.familia_nova') }}">família</a>
+  e uma <a href="{{ url_for('main.doacao_nova') }}">doação</a> com estoque disponível.
+</p>
+{% else %}
+<form method="post" class="formulario">
+  <label>Família *
+    <select name="familia_id">
+      {% for f in familias %}<option value="{{ f.id }}">{{ f.responsavel }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>Item (estoque disponível) *
+    <select name="doacao_id">
+      {% for d in doacoes %}
+      <option value="{{ d.id }}">{{ d.descricao }} — {{ d.quantidade_disponivel }} {{ d.unidade }} disp.</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Quantidade *
+    <input type="text" name="quantidade" required placeholder="Ex.: 2">
+  </label>
+  <label>Observação
+    <input type="text" name="observacao" maxlength="200">
+  </label>
+  <div class="acoes">
+    <button class="botao" type="submit">Registrar distribuição</button>
+    <a class="botao-sec" href="{{ url_for('main.distribuicoes') }}">Cancelar</a>
+  </div>
+</form>
+{% endif %}
+{% endblock %}
