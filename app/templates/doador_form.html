@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Novo doador · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<h1>Novo doador</h1>
+<form method="post" class="formulario">
+  <label>Nome / Razão social *
+    <input type="text" name="nome" required maxlength="120">
+  </label>
+  <label>Tipo *
+    <select name="tipo">
+      <option value="PF">Pessoa física</option>
+      <option value="PJ">Pessoa jurídica</option>
+    </select>
+  </label>
+  <label>E-mail
+    <input type="email" name="email" maxlength="120">
+  </label>
+  <label>Telefone
+    <input type="text" name="telefone" maxlength="20" placeholder="(11) 99999-0000">
+  </label>
+  <div class="acoes">
+    <button class="botao" type="submit">Salvar</button>
+    <a class="botao-sec" href="{{ url_for('main.doadores') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
