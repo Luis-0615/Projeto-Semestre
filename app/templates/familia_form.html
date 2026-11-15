@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Nova família · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<h1>Nova família</h1>
+<form method="post" class="formulario">
+  <label>Responsável *
+    <input type="text" name="responsavel" required maxlength="120">
+  </label>
+  <label>Bairro
+    <input type="text" name="bairro" maxlength="120">
+  </label>
+  <label>Telefone
+    <input type="text" name="telefone" maxlength="20" placeholder="(11) 99999-0000">
+  </label>
+  <label>Número de membros *
+    <input type="number" name="qtd_membros" min="1" value="1" required>
+  </label>
+  <div class="acoes">
+    <button class="botao" type="submit">Salvar</button>
+    <a class="botao-sec" href="{{ url_for('main.familias') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
