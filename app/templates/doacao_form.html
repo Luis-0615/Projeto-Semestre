@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Nova doação · Cesta Solidária{% endblock %}
+{% block conteudo %}
+<h1>Nova doação</h1>
+{% if not doadores %}
+<p class="vazio">Cadastre um <a href="{{ url_for('main.doador_novo') }}">doador</a> antes de registrar doações.</p>
+{% else %}
+<form method="post" class="formulario">
+  <label>Descrição do item *
+    <input type="text" name="descricao" required maxlength="200" placeholder="Ex.: Arroz tipo 1">
+  </label>
+  <label>Doador *
+    <select name="doador_id">
+      {% for d in doadores %}<option value="{{ d.id }}">{{ d.nome }}</option>{% endfor %}
+    </select>
+  </label>
+  <div class="grid-2">
+    <label>Quantidade *
+      <input type="text" name="quantidade" required placeholder="Ex.: 10,5">
+    </label>
+    <label>Unidade *
+      <select name="unidade">
+        {% for u in unidades %}<option value="{{ u }}">{{ u }}</option>{% endfor %}
+      </select>
+    </label>
+  </div>
+  <label>Categoria *
+    <select name="categoria">
+      {% for c in categorias %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+    </select>
+  </label>
+  <label>Data de validade (opcional)
+    <input type="date" name="data_validade">
+  </label>
+  <div class="acoes">
+    <button class="botao" type="submit">Salvar</button>
+    <a class="botao-sec" href="{{ url_for('main.doacoes') }}">Cancelar</a>
+  </div>
+</form>
+{% endif %}
+{% endblock %}
